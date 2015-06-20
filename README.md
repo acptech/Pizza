@@ -1,4 +1,25 @@
-To open this web page please unzip files to your local web server and open the index.html file for the main web page. You can also open the pizza.html file form the views/pizz.html file or acces sthis file from the main web page index.html.
+Copy all files into a folder and open index.html with you browser fot the main web page.
+
+The following changes were made to index.html:
+CSS
+Inlined all of the CSS into the head of the document and added the HTML media="print" attribute to the external style sheet link for print styles.
+JS
+Added the HTML async attribute to all script tags
+Images
+Resized images that were too large and compressed all images with the Kraken image compression tool. https://kraken.io/pro/uploader
+
+The following changes were made to pizza.html:
+Used Lazy Load CSS usin javascript http://www.giftofspeed.com/defer-loading-css/
+inlined main.js per PagePpeed Insights reccomnendations.
+Renamed the mis-named 'noise' value in the global adjectives array literal to ‘noisy’ to match the switch case ‘noisy’ in the getAdj function.
+Reduced the amount of sliding pizza elements generated from 200 down to 31, which still sufficiently fills the screen with sliding pizzas.
+Applied translateX() and translateZ(0) transform functions to the sliding pizza elements within the updatePositions function.
+
+Resources:
+Udacity Office Hours - https://plus.google.com/events/cjk2bief153ofdink5eln6nv8f8
+Chrome Office Hours - https://www.youtube.com/watch?v=z0_jD8nO5Zw
+CSS Tricks -  http://blog.teamtreehouse.com/increase-your-sites-performance-with-hardware-accelerated-css
+Javascript Loop iteration Performance - http://stackoverflow.com/questions/3520688/javascript-loop-performance-why-is-to-decrement-the-iterator-toward-0-faster-t
 
 
 ## Website Performance Optimization portfolio project
