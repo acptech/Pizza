@@ -552,16 +552,17 @@ var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
   // Changes the value for the size of the pizza above the slider
+  //Using getElementsByClassName() is faster than querySelectorAll(). 
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        getElementsByClassName("#pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        getElementsByClassName("#pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        getElementsByClassName("#pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -651,14 +652,14 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
-
+//when i change querySelectorAll to getElementsByClassName I lose the pizzas
   var items = document.querySelectorAll('.mover');
   var top = (document.body.scrollTop / 1250);
 
   for (var i = items.length; i--;) {
     var phase = Math.sin( top + (i % 5));
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-    var left = -items[i].basicLeft + 1000 * phase + 'px';
+    var left = -items[i].basicLeft + 1250 * phase + 'px';
         items[i].style.transform = "translateX("+left+") translateZ(0)";
   }
 
@@ -684,8 +685,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
-    elem.style.height = "100px";
-    elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
