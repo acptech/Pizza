@@ -1,3 +1,24 @@
+/*
+Welcome to the 60fps project! Your goal is to make Cam's Pizzeria website run
+jank-free at 60 frames per second.
+
+There are two major issues in this code that lead to sub-60fps performance. Can
+you spot and fix both?
+
+
+Built into the code, you'll find a few instances of the User Timing API
+(window.performance), which will be console.log()ing frame rate data into the
+browser console. To learn more about User Timing API, check out:
+http://www.html5rocks.com/en/tutorials/webperformance/usertiming/
+
+Creator:
+Cameron Pittman, Udacity Course Developer
+cameron *at* udacity *dot* com
+*/
+
+// As you may have realized, this website randomly generates pizzas.
+// Here are arrays of all possible pizza ingredients.
+
 function getAdj(e) {
     switch (e) {
         case "dark":
@@ -85,15 +106,15 @@ function randomName() {
         a = parseInt(Math.random() * nouns.length);
     return generator(adjectives[e], nouns[a])
 }
-
+// Logs the average amount of time per 10 frames needed to move the sliding background pizzas on scroll.
 function logAverageFrame(e) {
     for (var a = e.length, r = 0, n = a - 1; n > a - 11; n--) r += e[n].duration;
     console.log("Average time to generate last 10 frames: " + r / 10 + "ms")
 }
-
+// Moves the sliding background pizzas based on scroll position
 function updatePositions() {
     frame++, window.performance.mark("mark_start_frame");
-    for (var e = document.querySelectorAll(".mover"), a = document.body.scrollTop / 1250, r = e.length; r--;) {
+    for (var e = document.getElementsByClassName("mover"), a = document.body.scrollTop / 1250, r = e.length; r--;) {
         var n = Math.sin(a + r % 5),
             i = -e[r].basicLeft + 1e3 * n + "px";
         e[r].style.transform = "translateX(" + i + ") translateZ(0)"
@@ -170,27 +191,33 @@ var adjectives = ["dark", "color", "whimsical", "shiny", "noisy", "apocalyptic",
         }
 
         function n(e) {
-            for (var a = r(document.querySelector(".randomPizzaContainer"), e), n = document.querySelector(".randomPizzaContainer").offsetWidth + a + "px", i = document.querySelectorAll(".randomPizzaContainer"), t = i.length; t--;) i[t].style.width = n
+            for (var a = r(document.getElementsByClassName('randomPizzaContainer')[0], e), n = document.querySelector(".randomPizzaContainer").offsetWidth + a + "px", i = document.querySelectorAll(".randomPizzaContainer"), t = i.length; t--;) i[t].style.width = n
         }
         window.performance.mark("mark_start_resize"), a(e), n(e), window.performance.mark("mark_end_resize"), window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
         var i = window.performance.getEntriesByName("measure_pizza_resize");
         console.log("Time to resize pizzas: " + i[0].duration + "ms")
     };
 window.performance.mark("mark_start_generating");
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; 100 > i; i++) {
-    var pizzasDiv = document.getElementById("randomPizzas");
+    
     pizzasDiv.appendChild(pizzaElementGenerator(i))
 }
+// User Timing API to the rescue again. Seriously, it's worth learning.
+  // Super easy to create custom metrics.
 window.performance.mark("mark_end_generating"), window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
 var timeToGenerate = window.performance.getEntriesByName("measure_pizza_generation");
 console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "ms");
 var frame = 0;
+// runs updatePositions on scroll
 window.addEventListener("scroll", function() {
     window.requestAnimationFrame(updatePositions)
-}), document.addEventListener("DOMContentLoaded", function() {
+}), 
+// Generates the sliding pizzas when the page loads.
+document.addEventListener("DOMContentLoaded", function() {
     for (var e = 8, a = 256, r = 48; r--;) {
         var n = document.createElement("img");
-        n.className = "mover", n.src = "/images/pizza.png", n.basicLeft = r % e * a, n.style.top = Math.floor(r / e) * a + "px", n.style.height = "100px", n.style.width = "73.333px", document.querySelector("#movingPizzas1").appendChild(n)
+        n.className = "mover", n.src = "images/pizza.png", n.basicLeft = r % e * a; n.style.top = Math.floor(r / e) * a + "px", n.style.height = "100px", n.style.width = "73.333px", document.querySelector("#movingPizzas1").appendChild(n)
     }
     updatePositions()
 });

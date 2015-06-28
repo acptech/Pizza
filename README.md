@@ -1,4 +1,5 @@
-Copy all files into a folder and open index.html with you browser fot the main web page.
+Copy all files into a folder and open index.html with you browser for the main web page.
+Or you can click on index.html after firing up the web server or visit my Github page https://github.com/acptech/Pizza
 
 The following changes were made to index.html:
 CSS
